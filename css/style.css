@@ -1,0 +1,167 @@
+/* ==========================================================================
+   1. Root Variables
+   ========================================================================== */
+:root {
+    --bg-color-dark: rgb(15, 15, 15);
+    --platform-color-dark: rgba(28, 28, 28, 0.75);
+    --text-color-dark: rgb(230, 230, 230);
+    --border-color-dark: rgba(255, 255, 255, 0.5);
+    --glow-color-dark: rgba(255, 255, 255, 0.15);
+    
+    --bg-color-light: rgb(240, 240, 240);
+    --platform-color-light: rgba(255, 255, 255, 0.85);
+    --text-color-light: rgb(20, 20, 20);
+    --border-color-light: rgba(0, 0, 0, 0.5);
+    --glow-color-light: rgba(0, 0, 0, 0.1);
+    
+    --prob-bar-color: #32a852;
+    --timer-bar-color: #888888;
+    --correct-color: #50c878;
+    --incorrect-color: #e54b4b;
+    --glow-success-color: rgba(80, 200, 120, 0.7);
+    --glow-fail-color: rgba(229, 75, 75, 0.7);
+    
+    --transition-speed: 0.3s;
+}
+
+/* ==========================================================================
+   2. General & Body Styles
+   ========================================================================== */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+body.dark-theme { background-color: var(--bg-color-dark); color: var(--text-color-dark); }
+body.light-theme { background-color: var(--bg-color-light); color: var(--text-color-light); }
+
+/* ==========================================================================
+   3. Layout & Structure
+   ========================================================================== */
+#app-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+
+.screen {
+    position: absolute;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out;
+    transform: scale(0.98);
+}
+.screen.active { opacity: 1; pointer-events: auto; transform: scale(1); }
+
+.platform {
+    position: relative;
+    padding: 30px 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-speed), box-shadow 0.5s;
+    display: flex;
+    flex-direction: column;
+}
+.dark-theme .platform { background-color: var(--platform-color-dark); }
+.light-theme .platform { background-color: var(--platform-color-light); }
+
+#main-screen .platform { min-height: 480px; }
+
+#footer { position: absolute; bottom: 15px; font-size: 0.9rem; opacity: 0.6; color: inherit; }
+
+/* ==========================================================================
+   4. Components
+   ========================================================================== */
+
+/* --- Main Header --- */
+.main-header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 35px;
+}
+.main-header h1 {
+    margin: 0 0 5px 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+.light-theme .main-header h1 { color: var(--text-color-light); }
+
+#main-screen #level-display {
+    text-align: center;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+.main-header .settings-btn-trigger {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* --- Main content takes remaining space --- */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bottom-bar {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* --- Buttons --- */
+.btn { display: inline-block; padding: 12px 30px; font-size: 1.2rem; border: 1px solid var(--border-color-dark); border-radius: 50px; text-decoration: none; color: inherit; transition: all var(--transition-speed); margin: 10px 5px; background: rgba(255, 255, 255, 0.05); cursor: pointer; }
+.light-theme .btn { border-color: var(--border-color-light); background: rgba(0, 0, 0, 0.02); }
+@media (hover: hover) { .btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px var(--glow-color-dark); transform: translateY(-2px); } .light-theme .btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.05); box-shadow: 0 0 15px var(--glow-color-light); } }
+.btn:active { transform: translateY(0px) scale(0.98); box-shadow: none; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.action-buttons { display: flex; gap: 15px; margin-bottom: 25px; }
+.action-buttons .btn { flex: 1; margin: 0; padding: 18px; font-size: 1.4rem; font-weight: 500; }
+.btn.correct { border-color: var(--correct-color); }
+.btn.incorrect { border-color: var(--incorrect-color); }
+
+.difficulty-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.difficulty-buttons .btn { width: 100%; max-width: 280px; box-sizing: border-box; }
+
+.icon-btn { background: transparent; border: none; cursor: pointer; padding: 5px; line-height: 0; }
+.icon-btn img { transition: transform 0.2s; filter: invert(0.9); }
+.light-theme .icon-btn img { filter: invert(0.1); }
+.icon-btn:hover img { transform: scale(1.1); }
+
+/* --- Input Fields --- */
+.input-group { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 20px 0; }
+input[type="number"] { width: 100px; padding: 10px; font-size: 1.5rem; text-align: center; border: 1px solid var(--border-color-dark); background-color: transparent; color: inherit; border-radius: 10px; -moz-appearance: textfield; appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.light-theme input[type="number"] { border-color: var(--border-color-light); }
+
+/* --- Progress Bars & Timer --- */
+.progress-bar-container { width: 100%; height: 8px; background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; margin-top: 15px; overflow: hidden; }
+.progress-bar-fill { height: 100%; width: 0%; border-radius: 10px; transition: width 0.4s ease-in-out; }
+#progress-bar-fill { background-color: var(--prob-bar-color); }
+#timer-progress-bar { background-color: var(--timer-bar-color); }
+#timer-display { font-size: 4rem; font-weight: 500; margin: 10px 0; }
+#save-time-btn { margin-top: 20px; }
+
+/* --- Modal --- */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity var(--transition-speed); }
+.modal:not(.hidden) { opacity: 1; pointer-events: auto; }
+.modal-content { position: relative; width: 320px; }
+.close-btn { position: absolute; top: 15px; right: 15px; }
+.setting-item { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; font-size: 1.1rem; }
+.telegram-btn { width: 100%; text-align: center; margin-top: 30px; box-sizing: border-box; text-decoration: none; }
+
+.glow-success { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 40px 5px var(--glow-success-color); }
+.glow-fail { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 40px 5px var(--glow-fail-color); }
+.hidden { display: none !important; }

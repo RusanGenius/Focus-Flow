@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Focus Flow</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- PATH UPDATED -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
 
@@ -12,11 +13,19 @@
 
         <!-- Screen 1: Difficulty Selection -->
         <div id="difficulty-screen" class="screen active">
+            <h1 class="main-title-outside">Focus Flow</h1>
             <div class="platform">
-                <button class="icon-btn settings-btn-trigger">
-                    <img src="assets/icons/settings.svg" alt="Settings">
-                </button>
-                <h1 data-lang-key="difficultyTitle">Выберите сложность</h1>
+                <header class="platform-header">
+                    <h1 data-lang-key="difficultyTitle">Выберите сложность</h1>
+                    <div class="header-icons">
+                        <button class="icon-btn info-btn-trigger">
+                            <img src="assets/icons/info.svg" alt="Info">
+                        </button>
+                        <button class="icon-btn settings-btn-trigger">
+                            <img src="assets/icons/settings.svg" alt="Settings">
+                        </button>
+                    </div>
+                </header>
                 <div class="difficulty-buttons">
                     <button class="btn" data-difficulty="1" data-lang-key="diffEasy">Легко (+1%)</button>
                     <button class="btn" data-difficulty="2.5" data-lang-key="diffMedium">Средне (+2.5%)</button>
@@ -28,14 +37,23 @@
 
         <!-- Screen 2: Session Setup -->
         <div id="setup-screen" class="screen">
+            <h1 class="main-title-outside">Focus Flow</h1>
             <div class="platform">
-                <button class="icon-btn settings-btn-trigger">
-                    <img src="assets/icons/settings.svg" alt="Settings">
-                </button>
-                <h1 data-lang-key="setupTitle">Максимальное время награды</h1>
-                <p data-lang-key="setupDesc">После достижения этого уровня, он сбросится до 1.</p>
+                 <header class="platform-header">
+                    <h1 data-lang-key="setupTitle">Максимальное время награды</h1>
+                    <div class="header-icons">
+                        <button class="icon-btn info-btn-trigger">
+                            <img src="assets/icons/info.svg" alt="Info">
+                        </button>
+                        <button class="icon-btn settings-btn-trigger">
+                            <img src="assets/icons/settings.svg" alt="Settings">
+                        </button>
+                    </div>
+                </header>
+                <p data-lang-key="setupDesc" class="subtitle">После достижения этого уровня, он сбросится до 1.</p>
                 <div class="input-group">
-                    <input type="number" id="max-level-input" min="1" value="10">
+                    <!-- MAX VALUE ADDED -->
+                    <input type="number" id="max-level-input" min="1" max="300" value="10">
                     <span data-lang-key="minutes">минут</span>
                 </div>
                 <button id="start-btn" class="btn" data-lang-key="start">Начать</button>
@@ -44,17 +62,21 @@
 
         <!-- Screen 3: Main Application -->
         <div id="main-screen" class="screen">
+            <h1 class="main-title-outside">Focus Flow</h1>
             <div id="main-platform" class="platform">
-                <header class="main-header">
-                    <h1>Focus Flow</h1>
-                    <button class="icon-btn settings-btn-trigger">
-                         <img src="assets/icons/settings.svg" alt="Settings">
-                    </button>
+                <header class="platform-header">
                     <div id="level-display" data-lang-key-prefix="level">Уровень: 1</div>
+                    <div class="header-icons">
+                        <button class="icon-btn info-btn-trigger">
+                             <img src="assets/icons/info.svg" alt="Info">
+                        </button>
+                        <button class="icon-btn settings-btn-trigger">
+                             <img src="assets/icons/settings.svg" alt="Settings">
+                        </button>
+                    </div>
                 </header>
 
                 <div class="main-content">
-                    <!-- Timer section, shown on reward -->
                     <div id="timer-section" class="hidden">
                         <p class="reward-notification" id="reward-text">+1 минута</p>
                         <h2 id="timer-display">01:00</h2>
@@ -64,7 +86,6 @@
                         <button id="save-time-btn" class="btn" data-lang-key="saveTime">Сохранить оставшееся время</button>
                     </div>
 
-                    <!-- Main controls, hidden during break -->
                     <div id="main-controls">
                         <div class="action-buttons">
                             <button id="correct-btn" class="btn correct" data-lang-key="correct">Верно</button>
@@ -76,6 +97,7 @@
                                 <div id="progress-bar-fill" class="progress-bar-fill"></div>
                             </div>
                         </div>
+                        <div id="history-container" class="history-container"></div>
                     </div>
                 </div>
 
@@ -88,7 +110,7 @@
         <!-- Settings Modal -->
         <div id="settings-modal" class="modal hidden">
             <div class="modal-content platform">
-                <button id="close-modal-btn" class="icon-btn close-btn">
+                <button id="close-settings-modal-btn" class="icon-btn close-btn">
                     <img src="assets/icons/close.svg" alt="Close">
                 </button>
                 <h2 data-lang-key="settingsTitle">Настройки</h2>
@@ -107,10 +129,22 @@
                 <a href="https://t.me/astermaneiro" target="_blank" class="btn telegram-btn" data-lang-key="contact">Связаться в Telegram</a>
             </div>
         </div>
+
+        <!-- Info Modal -->
+        <div id="info-modal" class="modal hidden">
+            <div class="modal-content platform">
+                <button id="close-info-modal-btn" class="icon-btn close-btn">
+                    <img src="assets/icons/close.svg" alt="Close">
+                </button>
+                <div data-lang-key="infoText">
+                    <!-- Content will be inserted by JS -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer id="footer">Создал Русан</footer>
-
-    <script src="js/main.js"></script>
+    <!-- PATH UPDATED -->
+    <script src="main.js"></script>
 </body>
 </html>
